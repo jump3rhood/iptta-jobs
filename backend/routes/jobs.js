@@ -22,7 +22,7 @@ router.get('/', async (req, res) => {
     }
 
     const jobs = await Job.find(filter)
-      .select('jobTitle schoolName city roleType jobType salaryRange submittedAt')
+      .select('jobTitle schoolName city roleType roleTypeOther jobType salaryMin salaryMax submittedAt')
       .sort({ submittedAt: -1 });
 
     res.json(jobs);

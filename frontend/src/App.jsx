@@ -21,7 +21,7 @@ export default function App() {
                 <Route path="/" element={<Navigate to="/jobs" replace />} />
                 <Route path="/jobs" element={<JobBoard />} />
                 <Route path="/jobs/:id" element={<JobDetail />} />
-                <Route path="/submit" element={<SubmitJob />} />
+                <Route path="/submit/:token" element={<SubmitJob />} />
                 <Route path="/admin" element={<AdminLogin />} />
                 <Route
                   path="/admin/dashboard"

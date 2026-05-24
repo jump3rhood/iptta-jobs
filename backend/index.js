@@ -6,6 +6,7 @@ import dotenv from 'dotenv'
 import jobRoutes from './routes/jobs.js'
 import approveRoutes from './routes/approve.js'
 import adminRoutes from './routes/admin.js'
+import magicLinkRoutes from './routes/magicLink.js'
 
 dotenv.config()
 
@@ -21,6 +22,7 @@ app.get('/', (req, res) => {
 app.use('/api/jobs', jobRoutes)
 app.use('/api/approve', approveRoutes)
 app.use('/api/admin', adminRoutes)
+app.use('/api/magic', magicLinkRoutes)
 
 mongoose
   .connect(process.env.MONGODB_URI)

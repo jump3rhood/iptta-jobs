@@ -69,8 +69,14 @@ export default function JobCard({ job, index = 0 }) {
 
       {/* Footer */}
       <div className="flex items-center justify-between pt-3 border-t border-brand-blush/60">
-        {job.salaryRange ? (
-          <span className="text-sm font-bold text-brand-dark">{job.salaryRange}</span>
+        {(job.salaryMin || job.salaryMax) ? (
+          <span className="text-sm font-bold text-brand-dark">
+            {job.salaryMin && job.salaryMax
+              ? `₹${job.salaryMin.toLocaleString('en-IN')} – ₹${job.salaryMax.toLocaleString('en-IN')}`
+              : job.salaryMin
+                ? `From ₹${job.salaryMin.toLocaleString('en-IN')}`
+                : `Up to ₹${job.salaryMax.toLocaleString('en-IN')}`}
+          </span>
         ) : (
           <span className="text-xs text-brand-muted/70 italic font-medium">Salary not listed</span>
         )}

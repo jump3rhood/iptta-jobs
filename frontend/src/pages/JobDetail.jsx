@@ -7,6 +7,21 @@ const ROLE_LABELS = {
   kindergarten: 'Kindergarten', primary: 'Primary', subject: 'Subject Teacher',
   montessori: 'Montessori', other: 'Other',
 };
+
+function formatTime(t) {
+  if (!t) return '';
+  const [h, m] = t.split(':');
+  const hour = parseInt(h, 10);
+  const ampm = hour >= 12 ? 'PM' : 'AM';
+  const h12 = hour % 12 || 12;
+  return `${h12}:${m} ${ampm}`;
+}
+
+function formatSalary(min, max) {
+  if (min && max) return `₹${min.toLocaleString('en-IN')} – ₹${max.toLocaleString('en-IN')}`;
+  if (min) return `From ₹${min.toLocaleString('en-IN')}`;
+  return `Up to ₹${max.toLocaleString('en-IN')}`;
+}
 const JOB_TYPE_LABELS = {
   fulltime: 'Full-time', parttime: 'Part-time', substitute: 'Substitute',
 };
@@ -91,7 +106,7 @@ export default function JobDetail() {
       <div className="bg-white rounded-2xl border border-brand-blush shadow-sm p-5 mb-4 border-t-[3px] border-t-brand-rose">
         <div className="flex flex-wrap gap-2 mb-4">
           <span className="text-[11px] font-bold bg-brand-rose-light text-brand-rose-dark px-2.5 py-1 rounded-full">
-            {ROLE_LABELS[job.roleType] || job.roleType}
+            {job.roleType === 'other' && job.roleTypeOther ? job.roleTypeOther : (ROLE_LABELS[job.roleType] || job.roleType)}
           </span>
           <span className="text-[11px] font-bold bg-brand-gold-light text-brand-gold-dark px-2.5 py-1 rounded-full">
             {JOB_TYPE_LABELS[job.jobType] || job.jobType}
@@ -118,10 +133,10 @@ export default function JobDetail() {
 
         {/* Quick info grid */}
         <div className="grid grid-cols-2 gap-2.5">
-          {job.salaryRange && (
+          {(job.salaryMin || job.salaryMax) && (
             <div className="bg-brand-gold-light rounded-xl px-3 py-2.5">
-              <p className="text-[10px] text-brand-gold-dark font-bold uppercase tracking-wider">Salary</p>
-              <p className="text-sm font-bold text-brand-dark mt-0.5">{job.salaryRange}</p>
+              <p className="text-[10px] text-brand-gold-dark font-bold uppercase tracking-wider">Salary / month</p>
+              <p className="text-sm font-bold text-brand-dark mt-0.5">{formatSalary(job.salaryMin, job.salaryMax)}</p>
             </div>
           )}
           {job.experienceRequired !== undefined && (
@@ -132,10 +147,12 @@ export default function JobDetail() {
               </p>
             </div>
           )}
-          {job.workingHours && (
+          {(job.workingHoursFrom || job.workingHoursTo) && (
             <div className="bg-brand-rose-light/60 rounded-xl px-3 py-2.5">
               <p className="text-[10px] text-brand-muted font-bold uppercase tracking-wider">Hours</p>
-              <p className="text-sm font-bold text-brand-dark mt-0.5">{job.workingHours}</p>
+              <p className="text-sm font-bold text-brand-dark mt-0.5">
+                {formatTime(job.workingHoursFrom)} – {formatTime(job.workingHoursTo)}
+              </p>
             </div>
           )}
           {job.workingDays && (

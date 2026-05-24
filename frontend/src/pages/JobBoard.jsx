@@ -2,7 +2,6 @@ import { useJobs } from '../context/JobsContext.jsx';
 import JobCard from '../components/JobCard.jsx';
 import JobFilters from '../components/JobFilters.jsx';
 import LoadingSpinner from '../components/LoadingSpinner.jsx';
-import { Link } from 'react-router-dom';
 
 export default function JobBoard() {
   const { jobs, loading, error, filters } = useJobs();
@@ -61,16 +60,8 @@ export default function JobBoard() {
               {hasFilters ? 'No jobs match your filters' : 'No openings yet'}
             </h2>
             <p className="text-sm text-brand-muted mt-1.5 font-medium">
-              {hasFilters ? 'Try adjusting your search or filters.' : 'Check back soon or post a job below.'}
+              {hasFilters ? 'Try adjusting your search or filters.' : 'Check back soon — new listings are reviewed and posted regularly.'}
             </p>
-            {!hasFilters && (
-              <Link
-                to="/submit"
-                className="inline-block mt-5 bg-brand-rose hover:bg-brand-rose-dark text-white text-sm font-bold px-5 py-2.5 rounded-xl transition-colors shadow-sm"
-              >
-                Post a Job
-              </Link>
-            )}
           </div>
         )}
 

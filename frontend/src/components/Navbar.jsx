@@ -39,7 +39,6 @@ export default function Navbar() {
 
           {/* Desktop nav */}
           <nav className="hidden md:flex items-center gap-7">
-            <NavLink to="/jobs" className={linkClass}>Browse Jobs</NavLink>
             {token && <NavLink to="/admin/dashboard" className={linkClass}>Dashboard</NavLink>}
           </nav>
 
@@ -53,23 +52,10 @@ export default function Navbar() {
                 Sign out
               </button>
             )}
-            <Link
-              to="/submit"
-              className="bg-brand-gold hover:bg-brand-gold-dark text-brand-burgundy-deep text-sm font-bold px-4 py-2 rounded-lg transition-colors shadow-sm"
-            >
-              Post a Job
-            </Link>
           </div>
 
-          {/* Mobile: Post a job + hamburger */}
+          {/* Mobile: hamburger */}
           <div className="md:hidden flex items-center gap-2">
-            <Link
-              to="/submit"
-              onClick={() => setOpen(false)}
-              className="bg-brand-gold text-brand-burgundy-deep text-xs font-bold px-3 py-1.5 rounded-lg"
-            >
-              Post a Job
-            </Link>
             <button
               onClick={() => setOpen(o => !o)}
               className="p-2 rounded-md text-white/60 hover:text-white hover:bg-white/10 tap-highlight-none transition-colors"
@@ -92,7 +78,6 @@ export default function Navbar() {
       {/* Mobile menu */}
       {open && (
         <div className="md:hidden border-t border-white/10 bg-brand-burgundy-deep px-5 py-4 flex flex-col gap-4">
-          <NavLink to="/jobs" className={linkClass} onClick={() => setOpen(false)}>Browse Jobs</NavLink>
           {token && (
             <NavLink to="/admin/dashboard" className={linkClass} onClick={() => setOpen(false)}>
               Dashboard

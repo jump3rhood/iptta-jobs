@@ -9,6 +9,7 @@ export function AdminProvider({ children }) {
   const [allJobs, setAllJobs] = useState([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
+  const [magicLinks, setMagicLinks] = useState([]);
 
   const authHeaders = useCallback(() => ({
     'Content-Type': 'application/json',
@@ -81,6 +82,36 @@ export function AdminProvider({ children }) {
     return json;
   };
 
+  const fetchMagicLinks = useCallback(async () => {
+    const res = await fetch(`${API}/api/admin/magic-links`, { headers: authHeaders() });
+    const json = await res.json();
+    if (!res.ok) throw new Error(json.message || 'Failed to fetch links');
+    setMagicLinks(json);
+  }, [authHeaders]);
+
+  const createMagicLink = async (callerName, callerPhone) => {
+    const res = await fetch(`${API}/api/admin/magic-links`, {
+      method: 'POST',
+      headers: authHeaders(),
+      body: JSON.stringify({ callerName, callerPhone }),
+    });
+    const json = await res.json();
+    if (!res.ok) throw new Error(json.message || 'Failed to create link');
+    setMagicLinks(prev => [json, ...prev]);
+    return json;
+  };
+
+  const deleteMagicLink = async (id) => {
+    const res = await fetch(`${API}/api/admin/magic-links/${id}`, {
+      method: 'DELETE',
+      headers: authHeaders(),
+    });
+    const json = await res.json();
+    if (!res.ok) throw new Error(json.message || 'Failed to delete link');
+    setMagicLinks(prev => prev.filter(l => l._id !== id));
+    return json;
+  };
+
   const stats = useMemo(() => ({
     pending: allJobs.filter(j => j.status === 'pending').length,
     active: allJobs.filter(j => j.status === 'active').length,
@@ -93,6 +124,7 @@ export function AdminProvider({ children }) {
       token, login, logout,
       allJobs, stats, loading, error,
       fetchAdminJobs, approveJob, rejectJob, deleteJob,
+      magicLinks, fetchMagicLinks, createMagicLink, deleteMagicLink,
     }}>
       {children}
     </AdminContext.Provider>
