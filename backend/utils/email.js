@@ -2,8 +2,8 @@ import { Resend } from 'resend';
 
 export async function sendApprovalEmail(job) {
   const resend = new Resend(process.env.RESEND_API_KEY);
-  const base = process.env.CLIENT_URL;
-  const approveUrl = `${base.replace('jobs.', 'api.jobs.')}/api/approve/${job.approveToken}`;
+  const apiBase = process.env.API_URL || `http://localhost:${process.env.PORT || 5000}`;
+  const approveUrl = `${apiBase}/api/approve/${job.approveToken}`;
   const rejectUrl = `${approveUrl}/reject`;
 
   const expLabel = job.experienceRequired === 0 ? 'Fresher' : `${job.experienceRequired}+ years`;
@@ -20,7 +20,7 @@ export async function sendApprovalEmail(job) {
       <p><strong>Job:</strong> ${job.jobTitle} (${job.roleType}, ${job.jobType})</p>
       <p><strong>Contact:</strong> ${job.contactPerson} — ${job.contactEmail} / ${job.contactPhone}</p>
       <p><strong>Experience:</strong> ${expLabel}</p>
-      <p><strong>Salary:</strong> ${job.salaryRange || 'Not specified'}</p>
+      <p><strong>Salary:</strong> ${job.salaryMin && job.salaryMax ? `₹${job.salaryMin.toLocaleString()} – ₹${job.salaryMax.toLocaleString()} / month` : job.salaryMin ? `From ₹${job.salaryMin.toLocaleString()}` : job.salaryMax ? `Up to ₹${job.salaryMax.toLocaleString()}` : 'Not specified'}</p>
       <p><strong>Description:</strong><br/>${job.description || ''}</p>
       <br/>
       <a href="${approveUrl}" style="background:#16a34a;color:#fff;padding:10px 20px;text-decoration:none;border-radius:4px;">APPROVE</a>
