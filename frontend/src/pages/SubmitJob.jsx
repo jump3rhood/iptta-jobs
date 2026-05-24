@@ -22,8 +22,8 @@ const initialForm = {
 function Field({ label, required, children }) {
   return (
     <div>
-      <label className="block text-sm font-medium text-gray-700 mb-1">
-        {label} {required && <span className="text-red-500">*</span>}
+      <label className="block text-[11px] font-bold text-brand-muted uppercase tracking-widest mb-1.5">
+        {label} {required && <span className="text-brand-rose">*</span>}
       </label>
       {children}
     </div>
@@ -31,7 +31,18 @@ function Field({ label, required, children }) {
 }
 
 const inputClass =
-  'w-full px-3 py-2.5 bg-white border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent placeholder-gray-400';
+  'w-full px-3 py-2.5 bg-white border border-brand-blush rounded-xl text-sm font-medium text-brand-dark focus:outline-none focus:ring-2 focus:ring-brand-rose/30 focus:border-brand-rose transition-colors placeholder-brand-muted/40';
+
+function SectionHeader({ num, title }) {
+  return (
+    <h2 className="font-display italic font-medium text-lg text-brand-dark mb-4 flex items-center gap-3">
+      <span className="w-7 h-7 rounded-full bg-brand-rose text-white text-xs font-bold font-sans not-italic flex items-center justify-center flex-shrink-0 shadow-sm">
+        {num}
+      </span>
+      {title}
+    </h2>
+  );
+}
 
 export default function SubmitJob() {
   const { submitJob } = useJobs();
@@ -72,37 +83,38 @@ export default function SubmitJob() {
 
   if (success) {
     return (
-      <div className="max-w-lg mx-auto px-4 py-20 text-center">
-        <div className="text-5xl mb-4">🎉</div>
-        <h2 className="text-2xl font-bold text-gray-900 mb-2">Submission Received!</h2>
-        <p className="text-gray-500 text-sm leading-relaxed">
+      <div className="max-w-lg mx-auto px-4 py-20 text-center animate-fade-up">
+        <div className="w-20 h-20 bg-brand-rose-light rounded-full flex items-center justify-center mx-auto mb-5 shadow-sm">
+          <svg className="w-9 h-9 text-brand-rose" fill="currentColor" viewBox="0 0 24 24">
+            <path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/>
+          </svg>
+        </div>
+        <h2 className="font-display italic text-3xl text-brand-dark mb-2">Submission Received!</h2>
+        <p className="text-brand-muted text-sm leading-relaxed max-w-sm mx-auto font-medium">
           Your job listing has been sent for review. Our admin will approve it shortly and you'll see it go live on the board.
         </p>
         <button
           onClick={() => { setForm(initialForm); setSuccess(false); }}
-          className="mt-6 text-sm text-indigo-600 font-medium hover:underline"
+          className="mt-7 text-sm text-brand-rose font-bold hover:text-brand-rose-dark transition-colors"
         >
-          Submit another job
+          Submit another job →
         </button>
       </div>
     );
   }
 
   return (
-    <div className="max-w-2xl mx-auto px-4 py-6">
-      <div className="mb-6">
-        <h1 className="text-2xl font-bold text-gray-900">Post a Job</h1>
-        <p className="text-sm text-gray-500 mt-1">Fill in the details below and our admin will review and publish it.</p>
+    <div className="max-w-2xl mx-auto px-4 py-7">
+      <div className="mb-7">
+        <h1 className="font-display italic font-medium text-3xl sm:text-4xl text-brand-dark">Post a Job</h1>
+        <p className="text-sm text-brand-muted mt-2 font-medium">Fill in the details and our admin will review and publish it.</p>
       </div>
 
-      <form onSubmit={handleSubmit} className="flex flex-col gap-6">
+      <form onSubmit={handleSubmit} className="flex flex-col gap-4">
 
-        {/* Section 1: School Info */}
-        <section className="bg-white rounded-xl border border-gray-200 shadow-sm p-5">
-          <h2 className="font-semibold text-gray-900 mb-4 flex items-center gap-2">
-            <span className="bg-indigo-100 text-indigo-700 text-xs font-bold px-2 py-0.5 rounded">1</span>
-            School Information
-          </h2>
+        {/* Section 1 */}
+        <section className="bg-white rounded-2xl border border-brand-blush shadow-sm p-5">
+          <SectionHeader num="1" title="School Information" />
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <Field label="School Name" required>
               <input required className={inputClass} value={form.schoolName}
@@ -131,12 +143,9 @@ export default function SubmitJob() {
           </div>
         </section>
 
-        {/* Section 2: Job Details */}
-        <section className="bg-white rounded-xl border border-gray-200 shadow-sm p-5">
-          <h2 className="font-semibold text-gray-900 mb-4 flex items-center gap-2">
-            <span className="bg-indigo-100 text-indigo-700 text-xs font-bold px-2 py-0.5 rounded">2</span>
-            Job Details
-          </h2>
+        {/* Section 2 */}
+        <section className="bg-white rounded-2xl border border-brand-blush shadow-sm p-5">
+          <SectionHeader num="2" title="Job Details" />
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <div className="sm:col-span-2">
               <Field label="Job Title" required>
@@ -191,12 +200,9 @@ export default function SubmitJob() {
           </div>
         </section>
 
-        {/* Section 3: Description & Certifications */}
-        <section className="bg-white rounded-xl border border-gray-200 shadow-sm p-5">
-          <h2 className="font-semibold text-gray-900 mb-4 flex items-center gap-2">
-            <span className="bg-indigo-100 text-indigo-700 text-xs font-bold px-2 py-0.5 rounded">3</span>
-            About the Role
-          </h2>
+        {/* Section 3 */}
+        <section className="bg-white rounded-2xl border border-brand-blush shadow-sm p-5">
+          <SectionHeader num="3" title="About the Role" />
           <div className="flex flex-col gap-4">
             <Field label="Job Description">
               <textarea
@@ -209,17 +215,17 @@ export default function SubmitJob() {
             </Field>
 
             <div>
-              <p className="text-sm font-medium text-gray-700 mb-2">Certifications Required</p>
+              <p className="text-[11px] font-bold text-brand-muted uppercase tracking-widest mb-2.5">Certifications Required</p>
               <div className="flex flex-wrap gap-2">
                 {CERTIFICATIONS.map(cert => (
                   <button
                     key={cert}
                     type="button"
                     onClick={() => toggleCert(cert)}
-                    className={`text-xs font-medium px-3 py-1.5 rounded-full border transition-colors ${
+                    className={`text-xs font-bold px-3 py-1.5 rounded-full border transition-all ${
                       form.certifications.includes(cert)
-                        ? 'bg-indigo-600 border-indigo-600 text-white'
-                        : 'bg-white border-gray-300 text-gray-600 hover:border-indigo-300'
+                        ? 'bg-brand-rose border-brand-rose text-white shadow-sm'
+                        : 'bg-white border-brand-blush text-brand-muted hover:border-brand-rose hover:text-brand-rose'
                     }`}
                   >
                     {cert}
@@ -231,7 +237,7 @@ export default function SubmitJob() {
         </section>
 
         {error && (
-          <div className="bg-red-50 border border-red-200 rounded-lg px-4 py-3 text-sm text-red-700">
+          <div className="bg-brand-rose-light border border-brand-rose/20 rounded-xl px-4 py-3 text-sm text-brand-rose-dark font-medium">
             {error}
           </div>
         )}
@@ -239,7 +245,7 @@ export default function SubmitJob() {
         <button
           type="submit"
           disabled={submitting}
-          className="w-full bg-indigo-600 hover:bg-indigo-700 disabled:opacity-60 disabled:cursor-not-allowed text-white font-semibold py-3.5 rounded-xl text-sm transition-colors flex items-center justify-center gap-2"
+          className="w-full bg-brand-rose hover:bg-brand-rose-dark disabled:opacity-60 disabled:cursor-not-allowed text-white font-bold py-3.5 rounded-xl text-sm transition-colors flex items-center justify-center gap-2 shadow-sm"
         >
           {submitting ? (
             <><LoadingSpinner size="sm" /> Submitting...</>

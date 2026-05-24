@@ -4,12 +4,34 @@
 
 @layer base {
   body {
-    @apply bg-gray-50 text-gray-900 font-sans;
+    background-color: #f9f5f0;
+    color: #2a1520;
+    font-family: 'Mulish', system-ui, sans-serif;
+    -webkit-font-smoothing: antialiased;
+  }
+  ::selection {
+    background-color: #eedcdf;
+    color: #3d2030;
   }
 }
 
 @layer utilities {
   .tap-highlight-none {
     -webkit-tap-highlight-color: transparent;
+  }
+  .font-display {
+    font-family: 'Cormorant Garamond', Georgia, serif;
+  }
+  .scrollbar-none {
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+  }
+  .scrollbar-none::-webkit-scrollbar {
+    display: none;
+  }
+  .hero-gradient {
+    background: radial-gradient(ellipse 80% 60% at 10% -10%, #f5e8ea 0%, transparent 60%),
+                radial-gradient(ellipse 60% 50% at 90% 110%, #fdf5e8 0%, transparent 55%),
+                #f9f5f0;
   }
 }
