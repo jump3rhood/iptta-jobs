@@ -4,14 +4,14 @@
 
 @layer base {
   body {
-    background-color: #f9f5f0;
-    color: #2a1520;
-    font-family: 'Mulish', system-ui, sans-serif;
+    background-color: #fef9f5;
+    color: #1c1410;
+    font-family: 'Nunito', system-ui, sans-serif;
     -webkit-font-smoothing: antialiased;
   }
   ::selection {
-    background-color: #eedcdf;
-    color: #3d2030;
+    background-color: #fdeae5;
+    color: #c94a32;
   }
 }
 
@@ -30,8 +30,8 @@
     display: none;
   }
   .hero-gradient {
-    background: radial-gradient(ellipse 80% 60% at 10% -10%, #f5e8ea 0%, transparent 60%),
-                radial-gradient(ellipse 60% 50% at 90% 110%, #fdf5e8 0%, transparent 55%),
-                #f9f5f0;
+    background: radial-gradient(ellipse 80% 60% at 10% -10%, #fdeae5 0%, transparent 60%),
+                radial-gradient(ellipse 60% 50% at 90% 110%, #fef8e7 0%, transparent 55%),
+                #fef9f5;
   }
 }

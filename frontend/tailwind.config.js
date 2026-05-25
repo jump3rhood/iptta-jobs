@@ -4,23 +4,23 @@ export default {
   theme: {
     extend: {
       fontFamily: {
-        sans: ['Mulish', 'system-ui', 'sans-serif'],
+        sans: ['Nunito', 'system-ui', 'sans-serif'],
         display: ['"Cormorant Garamond"', 'Georgia', 'serif'],
       },
       colors: {
         brand: {
-          cream: '#f9f5f0',
-          burgundy: '#3d2030',
-          'burgundy-deep': '#2a1520',
-          rose: '#a86874',
-          'rose-dark': '#8a4f5c',
-          'rose-light': '#f5e8ea',
-          blush: '#eedcdf',
-          gold: '#c49a5e',
-          'gold-dark': '#a07840',
-          'gold-light': '#fdf5e8',
-          muted: '#8a7074',
-          dark: '#2a1520',
+          cream: '#fef9f5',
+          burgundy: '#2d4282',
+          'burgundy-deep': '#1e2f62',
+          rose: '#eb5e44',
+          'rose-dark': '#c94a32',
+          'rose-light': '#fdf0ec',
+          blush: '#f0e0d6',
+          gold: '#f5b945',
+          'gold-dark': '#c47d0e',
+          'gold-light': '#fef8e7',
+          muted: '#7a6960',
+          dark: '#1c1410',
         },
       },
       animation: {
