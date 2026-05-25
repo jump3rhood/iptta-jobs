@@ -7,6 +7,9 @@ import JobDetail from './pages/JobDetail.jsx';
 import SubmitJob from './pages/SubmitJob.jsx';
 import AdminLogin from './pages/AdminLogin.jsx';
 import AdminDashboard from './pages/AdminDashboard.jsx';
+import AdminPostJob from './pages/AdminPostJob.jsx';
+import AdminEditJob from './pages/AdminEditJob.jsx';
+import NotFound from './pages/NotFound.jsx';
 import ProtectedRoute from './components/ProtectedRoute.jsx';
 
 export default function App() {
@@ -31,6 +34,23 @@ export default function App() {
                     </ProtectedRoute>
                   }
                 />
+                <Route
+                  path="/admin/jobs/new"
+                  element={
+                    <ProtectedRoute>
+                      <AdminPostJob />
+                    </ProtectedRoute>
+                  }
+                />
+                <Route
+                  path="/admin/jobs/:id/edit"
+                  element={
+                    <ProtectedRoute>
+                      <AdminEditJob />
+                    </ProtectedRoute>
+                  }
+                />
+                <Route path="*" element={<NotFound />} />
               </Routes>
             </main>
           </div>

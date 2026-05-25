@@ -11,7 +11,7 @@ export async function sendApprovalEmail(job) {
   console.log(`[email] Sending approval email to ${process.env.ADMIN_EMAIL} for job: "${job.jobTitle}" at ${job.schoolName}`);
 
   const { data, error } = await resend.emails.send({
-    from: 'IPTTA Jobs <onboarding@resend.dev>',
+    from: process.env.EMAIL_FROM || 'IPTTA Jobs <onboarding@resend.dev>',
     to: process.env.ADMIN_EMAIL,
     subject: `New Job Submission: ${job.jobTitle} at ${job.schoolName}`,
     html: `

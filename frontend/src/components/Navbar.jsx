@@ -25,11 +25,7 @@ export default function Navbar() {
 
           {/* Logo */}
           <Link to="/jobs" className="flex items-center gap-2.5 tap-highlight-none" onClick={() => setOpen(false)}>
-            <div className="w-8 h-8 rounded-full bg-brand-rose/20 border border-brand-rose/30 flex items-center justify-center flex-shrink-0">
-              <svg className="w-4 h-4 text-brand-gold" viewBox="0 0 24 24" fill="currentColor">
-                <path d="M12 3L1 9l4 2.18v6L12 21l7-3.82v-6l2-1.09V17h2V9L12 3zm6.82 6L12 12.72 5.18 9 12 5.28 18.82 9zM17 15.99l-5 2.73-5-2.73v-3.72L12 15l5-2.73v3.72z"/>
-              </svg>
-            </div>
+            <img src="/favicon.png" alt="IPTTA" className="w-9 h-9 rounded-full object-cover flex-shrink-0" />
             <div className="leading-none">
               <span className="font-display italic font-medium text-white text-[1.15rem] tracking-wide">
                 IPTTA <span className="text-brand-gold not-italic font-semibold">Jobs</span>

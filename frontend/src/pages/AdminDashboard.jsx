@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { useAdmin } from '../context/AdminContext.jsx';
 import LoadingSpinner from '../components/LoadingSpinner.jsx';
 
@@ -44,7 +45,7 @@ function formatSalary(min, max) {
   return null;
 }
 
-function JobRow({ job, onApprove, onReject, onDelete, busy }) {
+function JobRow({ job, onApprove, onReject, onDelete, onEdit, busy }) {
   const date = new Date(job.submittedAt).toLocaleDateString('en-IN', {
     day: 'numeric', month: 'short',
   });
@@ -115,6 +116,15 @@ function JobRow({ job, onApprove, onReject, onDelete, busy }) {
             View Live ↗
           </button>
         )}
+        <button
+          onClick={() => onEdit(job._id)}
+          className="px-3 py-2 border border-brand-blush text-brand-muted hover:text-brand-gold-dark hover:border-brand-gold/40 text-xs rounded-xl transition-colors"
+          title="Edit"
+        >
+          <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
+          </svg>
+        </button>
         <button
           onClick={() => {
             if (window.confirm('Delete this job permanently?')) onDelete(job._id);
@@ -303,6 +313,7 @@ function MagicLinksPanel() {
 
 export default function AdminDashboard() {
   const { allJobs, stats, loading, error, fetchAdminJobs, approveJob, rejectJob, deleteJob } = useAdmin();
+  const navigate = useNavigate();
   const [tab, setTab] = useState('pending');
   const [busy, setBusy] = useState(false);
   const [actionError, setActionError] = useState('');
@@ -332,18 +343,29 @@ export default function AdminDashboard() {
           <h1 className="font-display italic font-medium text-2xl sm:text-3xl text-brand-dark">Dashboard</h1>
           <p className="text-sm text-brand-muted mt-0.5 font-medium">Manage all job submissions</p>
         </div>
-        <button
-          onClick={() => fetchAdminJobs()}
-          disabled={loading}
-          className="text-sm text-brand-rose font-bold flex items-center gap-1.5 hover:text-brand-rose-dark transition-colors"
-        >
-          {loading ? <LoadingSpinner size="sm" /> : (
+        <div className="flex items-center gap-3">
+          <button
+            onClick={() => navigate('/admin/jobs/new')}
+            className="flex items-center gap-1.5 text-sm font-bold bg-brand-rose hover:bg-brand-rose-dark text-white px-4 py-2 rounded-xl transition-colors"
+          >
             <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" />
             </svg>
-          )}
-          Refresh
-        </button>
+            Post a Job
+          </button>
+          <button
+            onClick={() => fetchAdminJobs()}
+            disabled={loading}
+            className="text-sm text-brand-rose font-bold flex items-center gap-1.5 hover:text-brand-rose-dark transition-colors"
+          >
+            {loading ? <LoadingSpinner size="sm" /> : (
+              <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
+              </svg>
+            )}
+            Refresh
+          </button>
+        </div>
       </div>
 
       {/* Stats */}
@@ -406,6 +428,7 @@ export default function AdminDashboard() {
               onApprove={id => handle(approveJob, id)}
               onReject={id => handle(rejectJob, id)}
               onDelete={id => handle(deleteJob, id)}
+              onEdit={id => navigate(`/admin/jobs/${id}/edit`)}
             />
           ))}
         </div>

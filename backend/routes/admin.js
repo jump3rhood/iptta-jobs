@@ -30,6 +30,22 @@ router.get('/jobs', auth, async (req, res) => {
   }
 })
 
+// POST /api/admin/jobs — admin directly creates an active job
+router.post('/jobs', auth, async (req, res) => {
+  try {
+    const now = new Date()
+    const job = await Job.create({
+      ...req.body,
+      status: 'active',
+      approvedAt: now,
+      expiresAt: new Date(now.getTime() + 60 * 24 * 60 * 60 * 1000),
+    })
+    res.status(201).json(job)
+  } catch (err) {
+    res.status(400).json({ message: err.message })
+  }
+})
+
 // PUT /api/admin/jobs/:id — edit a listing
 router.put('/jobs/:id', auth, async (req, res) => {
   try {

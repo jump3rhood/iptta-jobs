@@ -71,6 +71,30 @@ export function AdminProvider({ children }) {
     return json;
   };
 
+  const editJob = async (id, data) => {
+    const res = await fetch(`${API}/api/admin/jobs/${id}`, {
+      method: 'PUT',
+      headers: authHeaders(),
+      body: JSON.stringify(data),
+    });
+    const json = await res.json();
+    if (!res.ok) throw new Error(json.message || 'Failed to update');
+    setAllJobs(prev => prev.map(j => j._id === id ? json : j));
+    return json;
+  };
+
+  const createJob = async (data) => {
+    const res = await fetch(`${API}/api/admin/jobs`, {
+      method: 'POST',
+      headers: authHeaders(),
+      body: JSON.stringify(data),
+    });
+    const json = await res.json();
+    if (!res.ok) throw new Error(json.message || 'Failed to create');
+    setAllJobs(prev => [json, ...prev]);
+    return json;
+  };
+
   const deleteJob = async (id) => {
     const res = await fetch(`${API}/api/admin/jobs/${id}`, {
       method: 'DELETE',
@@ -123,7 +147,7 @@ export function AdminProvider({ children }) {
     <AdminContext.Provider value={{
       token, login, logout,
       allJobs, stats, loading, error,
-      fetchAdminJobs, approveJob, rejectJob, deleteJob,
+      fetchAdminJobs, approveJob, rejectJob, editJob, createJob, deleteJob,
       magicLinks, fetchMagicLinks, createMagicLink, deleteMagicLink,
     }}>
       {children}

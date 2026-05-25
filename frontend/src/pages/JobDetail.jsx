@@ -93,7 +93,7 @@ export default function JobDetail() {
     <div className="max-w-2xl mx-auto px-4 py-6 animate-fade-up">
       {/* Back */}
       <button
-        onClick={() => navigate(-1)}
+        onClick={() => navigate('/jobs')}
         className="flex items-center gap-1.5 text-sm font-bold text-brand-muted hover:text-brand-rose mb-5 transition-colors group"
       >
         <svg className="w-4 h-4 group-hover:-translate-x-0.5 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor">
