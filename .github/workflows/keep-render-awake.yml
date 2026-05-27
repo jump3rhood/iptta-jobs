@@ -1,0 +1,26 @@
+name: Keep Render Awake
+
+on:
+  schedule:
+    # Every 15 mins Mon-Sat
+    # 9:45 AM IST → 4:15 UTC
+    # 9:00 PM IST → 15:30 UTC
+
+    - cron: '15 4 * * 1-6'
+    - cron: '30 4 * * 1-6'
+    - cron: '45 4 * * 1-6'
+
+    - cron: '0,15,30,45 5-15 * * 1-6'
+
+    - cron: '0,15,30 16 * * 1-6'
+
+  workflow_dispatch:
+
+jobs:
+  ping:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Ping Render App
+        run: |
+          curl -L --silent --output /dev/null https://iptta-jobs.onrender.com/
