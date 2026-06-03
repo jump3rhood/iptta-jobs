@@ -23,4 +23,10 @@ jobs:
     steps:
       - name: Ping Render App
         run: |
-          curl -L --silent --output /dev/null https://iptta-jobs.onrender.com/
+          status=$(curl -L -s -o /dev/null -w "%{http_code}" https://iptta-jobs.onrender.com/) 
+          echo "HTTP status: $status"
+  
+          if [ "$status" -lt 200 ] || [ "$status" -ge 400 ]; then
+            echo "Ping failed with status $status"
+            exit 1
+          fi
